@@ -1,0 +1,1 @@
+echo '{"text": "Hello **world**!"}' | curl -d @- localhost:5000/update
