@@ -5,7 +5,7 @@ var app = express()
 
 var mongoose = require('mongoose');
  
-mongoose.connect('mongodb://adherencerw:mongothis!@ds011248.mlab.com:11248/adherencepill');
+mongoose.connect('mongodb://adpillrw:mongo12@ds011248.mlab.com:11248/adherencepill');
 
 var bodyParser = require('body-parser');
 var multer = require('multer'); // v1.0.5
