@@ -1,6 +1,12 @@
 var express = require('express')
 var app = express()
 
+//Database connection
+
+var mongoose = require('mongoose');
+ 
+mongoose.connect('mongodb://adherencerw:mongothis!@ds011248.mlab.com:11248/adherencepill');
+
 var bodyParser = require('body-parser');
 var multer = require('multer'); // v1.0.5
 var upload = multer(); // for parsing multipart/form-data
