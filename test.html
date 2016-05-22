@@ -1,0 +1,27 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Test Get</title>
+  <meta name="description" content="Test GET">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+
+    data = {"collection": "Message", "Criteria": {"subject": "Test "}, "FieldsToRetrieve": "text"};
+    $.ajax({
+    dataType: "json",
+    url: "http://localhost:5000/",
+    data: data,
+    success: function (newdata) {
+        console.log(newdata);
+    }
+  });
+
+  </script>
+</body>
+</html

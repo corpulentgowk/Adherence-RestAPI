@@ -21,6 +21,16 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
 
+// Additional middleware which will set headers that we need on each request.
+app.use(function(req, res, next) {
+    // Set permissive CORS header - this allows this server to be used only as
+    // an API server in conjunction with something like webpack-dev-server.
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    //res.setHeader('Cache-Control', 'no-cache');
+    next();
+});
+
 var Schema = mongoose.Schema;
 
 // schemas for most existing collections
@@ -131,7 +141,19 @@ var newMess  = new Message({
 newMess.save(function (err) {
   if (err) console.log(err);
 })*/
-
+app.get ('/', function (request, response) {
+  var data = (request.query);
+  var schemaObject = data['collection'] + 'Schema'; // same deal as below
+  var newColl = mongoose.model(data['collection'], eval(schemaObject)); // " "
+  var query = newColl.findOne(data['Criteria']); // create new query with specified criteria
+  query.select(data['FieldsToRetrieve']); // OMIT if want all fields
+  query.exec(function (err, result) {
+    if (err) {
+      return handleError(err);
+    }
+    response.send(result);
+  })
+})
 app.post('/retrieve', function(request, response) {
   // this is the json query I used
   // {"collection": "Message", "Criteria": {"subject": "Test "}, "FieldsToRetrieve": "text"}
