@@ -132,8 +132,20 @@ newMess.save(function (err) {
   if (err) console.log(err);
 })*/
 
-app.get('/', function(request, response) {
-  response.send({'hi': 5})
+app.post('/retrieve', function(request, response) {
+  // this is the json query I used
+  // {"collection": "Message", "Criteria": {"subject": "Test "}, "FieldsToRetrieve": "text"}
+  var data = (request.body);
+  var schemaObject = data['collection'] + 'Schema'; // same deal as below
+  var newColl = mongoose.model(data['collection'], eval(schemaObject)); // " "
+  var query = newColl.findOne(data['Criteria']); // create new query with specified criteria
+  query.select(data['FieldsToRetrieve']); // OMIT if want all fields
+  query.exec(function (err, result) {
+    if (err) {
+      return handleError(err);
+    }
+    response.send(result);
+  })
 })
 
 app.post('/update', function(request, response) {
