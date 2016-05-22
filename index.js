@@ -114,11 +114,11 @@ var ScheduleSchema = new Schema({
 
 
 // needed for dates (updatedat etc)
-//var now = new Date();
-//var jsonDate = now.toJSON();
+/*var now = new Date();
+var jsonDate = now.toJSON();
 
 // example of how to save to Mongo
-/*var Message = mongoose.model('Message', MessageSchema);
+var Message = mongoose.model('Message', MessageSchema);
 var newMess  = new Message({
   _p_addressee: "Yo",
   _p_sender: "Yo",
@@ -154,6 +154,27 @@ app.post('/update', function(request, response) {
       // save Parse User
       newUser.save();
   }
+  else {
+    // new Schema object, take collection from JSON and add Schema
+    var schemaObject = data['collection'] + 'Schema';
+    // new Collection object
+    var newColl = mongoose.model(data['collection'], eval(schemaObject));
+    var now = new Date(); // take current date
+    var jsonDate = now.toJSON();
+    var newObject = new newColl({ // new object
+      _created_at: jsonDate, // set dates
+      _updated_at: jsonDate
+    });
+    for (var field in data['Fields']) // go through fields in JSON
+    {
+      newObject[field] = data['Fields'][field]; // set them in the new object
+    }
+    // save new object
+    newObject.save(function (err) {
+      if (err) console.log(err);
+    })
+  }
+
 
 
 	response.send("Success");
