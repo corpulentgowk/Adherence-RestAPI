@@ -143,8 +143,8 @@ newMess.save(function (err) {
 })*/
 app.get ('/', function (request, response) {
   var data = (request.query);
-  var schemaObject = data['collection'] + 'Schema'; // same deal as below
-  var newColl = mongoose.model(data['collection'], eval(schemaObject)); // " "
+  var schemaObject = data['Collection'] + 'Schema'; // same deal as below
+  var newColl = mongoose.model(data['Collection'], eval(schemaObject)); // " "
   var query = newColl.findOne(data['Criteria']); // create new query with specified criteria
   query.select(data['FieldsToRetrieve']); // OMIT if want all fields
   query.exec(function (err, result) {
@@ -158,8 +158,8 @@ app.post('/retrieve', function(request, response) {
   // this is the json query I used
   // {"collection": "Message", "Criteria": {"subject": "Test "}, "FieldsToRetrieve": "text"}
   var data = (request.body);
-  var schemaObject = data['collection'] + 'Schema'; // same deal as below
-  var newColl = mongoose.model(data['collection'], eval(schemaObject)); // " "
+  var schemaObject = data['Collection'] + 'Schema'; // same deal as below
+  var newColl = mongoose.model(data['Collection'], eval(schemaObject)); // " "
   var query = newColl.findOne(data['Criteria']); // create new query with specified criteria
   query.select(data['FieldsToRetrieve']); // OMIT if want all fields
   query.exec(function (err, result) {
@@ -177,7 +177,7 @@ app.post('/update', function(request, response) {
   // "email": "MONGO@mongo.mongos", "phone": "3234asd23333", "firstname": "jacky",
   // "lastname": "baley", "gender": "Male"}}
 
-  if (data['collection'] == "User") {
+  if (data['Collection'] == "User") {
       var newUser = new Parse.User(); // new Parse User
       // run a loop on each field in the JSON
       for (var field in data['Fields'])
@@ -190,9 +190,9 @@ app.post('/update', function(request, response) {
   }
   else {
     // new Schema object, take collection from JSON and add Schema
-    var schemaObject = data['collection'] + 'Schema';
+    var schemaObject = data['Collection'] + 'Schema';
     // new Collection object
-    var newColl = mongoose.model(data['collection'], eval(schemaObject));
+    var newColl = mongoose.model(data['Collection'], eval(schemaObject));
     var now = new Date(); // take current date
     var jsonDate = now.toJSON();
     var newObject = new newColl({ // new object
