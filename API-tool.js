@@ -16,16 +16,15 @@ function AdhObject(collection, getProperties) {
             console.log(property);
           }
     }*/
-    var attachFields = function (obj) {
-      Object.keys(obj).forEach(function(key,index) {
-        if (key != "Collection" && key != "Save") {
-            Fields[key] = obj[key];
-            console.log(key);
-          }
-      });
-    }
-    attachFields(this);
-    console.log(Fields);
+
+    // loop over the properties and them to the Fields JSON
+    Object.keys(this).forEach(function(key,index) {
+      if (key != "Collection" && key != "Save") {
+          Fields[key] = this[key];
+        }
+    }.bind(this));
+
+    // ajax post call
     data = {"Collection": this.Collection, "Fields": Fields};
     $.ajax({
     dataType: "json",
