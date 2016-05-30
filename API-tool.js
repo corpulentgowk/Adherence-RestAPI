@@ -15,6 +15,7 @@ function AdhObject(collection, getProperties) {
     Fields = this.fieldsToJson();
     // ajax post call
     data = {"Collection": this.Collection, "Fields": Fields};
+
     $.ajax({
       dataType: "json",
       type: "POST",
@@ -22,6 +23,10 @@ function AdhObject(collection, getProperties) {
       data: data,
       success: function (succ) {
           console.log(succ);
+          console.log('test');
+      },
+      error: function (t, b, err){
+        console.log(t);
       }
     });
   }
