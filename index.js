@@ -190,6 +190,7 @@ app.post('/update', function(request, response) {
   }
   else {
     // new Schema object, take collection from JSON and add Schema
+    var Valid = true;
     var schemaObject = data['Collection'] + 'Schema';
     // new Collection object
     var newColl = mongoose.model(data['Collection'], eval(schemaObject));
@@ -199,19 +200,40 @@ app.post('/update', function(request, response) {
       _created_at: jsonDate, // set dates
       _updated_at: jsonDate
     });
+    var schemafields = eval(schemaObject).paths
+
     for (var field in data['Fields']) // go through fields in JSON
     {
       newObject[field] = data['Fields'][field]; // set them in the new object
+     if (!(field in schemafields)){
+         response.send("Error: " + field + " does not exist in the " + data["Collection"] + " table");
+         Valid = false;
+      }
     }
+
     // save new object
     newObject.save(function (err) {
-      if (err) console.log(err);
+      if (err) {
+        if (Valid) {
+           Valid = false;
+           var error = err["errors"];
+           var errorKeys = Object.keys(error);
+           response.send(err["errors"][errorKeys[0]]);
+           }
+      }
+      else{
+        if (Valid){
+          var res = {
+            status: 200,
+            success : 'Updated Successfully'};
+
+          response.end(JSON.stringify(res));
+        }
+      }
     })
-  }
+    }
 
 
-
-	response.send("Success");
 })
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
