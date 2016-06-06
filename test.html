@@ -14,15 +14,32 @@
   <script type="text/javascript">
 
 
+  // create an instance of the class with collection set to pill lib
+  var pill = new AdhObject("PillLib");
 
-  var a = new AdhObject("PillLib");
-  a.pillName = "Testing number";
-  a.pillInfo = "THIS IS FOR THE BOYYYYYYYYYYYYYYYYYYY";
-  a.GetLayout();
+  // print the schem for the pill lib class
+  pill.GetLayout();
 
+  // set the desired fields
+  pill.pillName = "Vitrum";
+  pill.pillInfo = "Some Info";
 
+  // save the object
+  pill.Save();
 
+  // create new object to retrive the pill that we just saved
 
+  var getPill = new AdhObject("PillLib");
+
+  // set the query parameter
+  getPill.pillName = "Vitrum";
+
+  // search for this pillName
+
+  var retrievedPill = getPill.Get();
+
+  // print it
+  console.log(retrievedPill);
 
 
   </script>

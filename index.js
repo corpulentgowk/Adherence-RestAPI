@@ -154,6 +154,7 @@ app.get ('/', function (request, response) {
     response.send(result);
   })
 })
+/*
 app.post('/retrieve', function(request, response) {
   // this is the json query I used
   // {"collection": "Message", "Criteria": {"subject": "Test "}, "FieldsToRetrieve": "text"}
@@ -168,7 +169,7 @@ app.post('/retrieve', function(request, response) {
     }
     response.send(result);
   })
-})
+})*/
 
 app.post('/save', function(request, response) {
   var data = (request.body);
