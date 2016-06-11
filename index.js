@@ -178,6 +178,26 @@ app.post('/save', function(request, response) {
   // "email": "MONGO@mongo.mongos", "phone": "3234asd23333", "firstname": "jacky",
   // "lastname": "baley", "gender": "Male"}}
 
+
+  if (data['Fields']['_id'] != null) { //Updates existing entries
+    var schemaObject = data['Collection'] + 'Schema';
+    var newColl = mongoose.model(data['Collection'], eval(schemaObject));
+    var id = data['Fields']['_id'];
+    delete data['Fields']['_id']
+
+    newColl.findByIdAndUpdate(id, { $set: data['Fields']}, function (err,  obj) {
+            if (err) return handleError(err);
+              var res = {
+              status: 200,
+              success : 'Updated Successfully'};
+
+              response.end(JSON.stringify(res));
+
+          });
+    return
+  }
+
+
   if (data['Collection'] == "User") {
       var newUser = new Parse.User(); // new Parse User
       // run a loop on each field in the JSON
@@ -197,10 +217,12 @@ app.post('/save', function(request, response) {
     var newColl = mongoose.model(data['Collection'], eval(schemaObject));
     var now = new Date(); // take current date
     var jsonDate = now.toJSON();
+
     var newObject = new newColl({ // new object
       _created_at: jsonDate, // set dates
       _updated_at: jsonDate
     });
+
     var schemafields = eval(schemaObject).paths
 
     for (var field in data['Fields']) // go through fields in JSON

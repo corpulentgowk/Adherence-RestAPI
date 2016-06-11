@@ -15,31 +15,32 @@
 
 
   // create an instance of the class with collection set to pill lib
-  var pill = new AdhObject("PillLib");
+ /// var pill = new AdhObject("PillLib");
 
   // print the schem for the pill lib class
-  pill.GetLayout();
+  //pill.GetLayout();
 
   // set the desired fields
-  pill.pillName = "Vitrum";
-  pill.pillInfo = "Some Info";
+ // pill.pillName = "Vitrum";
+//  pill.pillInfo = "Some Info";
 
   // save the object
-  pill.Save();
+//  pill.Save();
 
   // create new object to retrive the pill that we just saved
 
   var getPill = new AdhObject("PillLib");
 
   // set the query parameter
-  getPill.pillName = "Vitrum";
+  getPill._id = "575c79646a2dcf322b17c093";
 
   // search for this pillName
 
-  var retrievedPill = getPill.Get();
-
+  getPill.Get();
+  getPill.pillInfo = "Final passover";
+  getPill.Save();
   // print it
-  console.log(retrievedPill);
+  //console.log(getPill);
 
 
   </script>

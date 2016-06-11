@@ -14,8 +14,9 @@ function AdhObject(collection, getProperties) {
   this.Save = function () {
     Fields = this.fieldsToJson();
     // ajax post call
-    data = {"Collection": this.Collection, "Fields": Fields};
 
+    data = {"Collection": this.Collection, "Fields": Fields};
+    console.log(data);
     $.ajax({
       dataType: "json",
       type: "POST",
@@ -43,7 +44,12 @@ function AdhObject(collection, getProperties) {
         obj = result
       }
     });
-    return obj;
+
+    Object.keys(obj).forEach(function(key,index) {
+      this[key] = obj[key]
+    }.bind(this))
+
+    console.log(this);
   }
 
   this.GetLayout = function () {
