@@ -154,6 +154,7 @@ app.get ('/', function (request, response) {
     response.send(result);
   })
 })
+/*
 app.post('/retrieve', function(request, response) {
   // this is the json query I used
   // {"collection": "Message", "Criteria": {"subject": "Test "}, "FieldsToRetrieve": "text"}
@@ -168,9 +169,9 @@ app.post('/retrieve', function(request, response) {
     }
     response.send(result);
   })
-})
+})*/
 
-app.post('/update', function(request, response) {
+app.post('/save', function(request, response) {
   var data = (request.body);
   // This is the json I used to test:
   // {"collection": "User", "Fields": {"username": "MONGO@mongo.msngo", "password": "xD",
@@ -235,10 +236,13 @@ app.post('/update', function(request, response) {
 
 
 })
-app.get ('/getColumnNames', function (request, response) {
 
-}
-}
+app.get ('/getSchema', function (request, response) {
+  var data = (request.query);
+  var schemaObject = data['Collection'] + 'Schema';
+  response.send(eval(schemaObject)['paths']);
+
+});
 
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))

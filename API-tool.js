@@ -5,7 +5,7 @@ function AdhObject(collection, getProperties) {
     data = {};
     // loop over the properties and convert them to JSON
     Object.keys(this).forEach(function(key,index) {
-      if (key != "Collection" && key != "Save" && key != "Get" && key != "fieldsToJson")
+      if (key != "Collection" && key != "Save" && key != "Get" && key != "fieldsToJson" && key != "GetLayout")
           data[key] = this[key];
     }.bind(this));
     return data;
@@ -19,11 +19,10 @@ function AdhObject(collection, getProperties) {
     $.ajax({
       dataType: "json",
       type: "POST",
-      url: "http://localhost:5000/update",
+      url: "http://localhost:5000/save",
       data: data,
       success: function (succ) {
           console.log(succ);
-          console.log('test');
       },
       error: function (t, b, err){
         console.log(t);
@@ -46,4 +45,24 @@ function AdhObject(collection, getProperties) {
     });
     return obj;
   }
+
+  this.GetLayout = function () {
+    // passing collection name
+    data = {"Collection": this.Collection}
+    $.ajax({
+      dataType: "json",
+      type: "GET",
+      url: "http://localhost:5000/getSchema",
+      data: data,
+      success: function (result) {
+          console.log("gotem")
+          console.log(result);
+      },
+      error: function (msg, b, err){
+        console.log(msg);
+      }
+    });
+  }
+
+
 }
