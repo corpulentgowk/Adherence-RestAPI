@@ -2,7 +2,7 @@
 
 A Node.js app using [Express 4](http://expressjs.com/).
 
-An object oriented database query tool using [JavaScript]. 
+An object oriented database query tool using JavaScript. 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) installed.
