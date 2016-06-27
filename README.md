@@ -1,4 +1,4 @@
-# Adherence RestAPI
+# Adherence RestAPI and Object Oriented Query Tool
 
 A Node.js app using [Express 4](http://expressjs.com/).
 
