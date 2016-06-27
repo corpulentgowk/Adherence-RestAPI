@@ -20,3 +20,6 @@ npm start
 
 The adherence API should now be running on [localhost:5000](http://localhost:5000/).
 
+## Using the JavaScript Tool
+
+Include "API-tool.js" in the HTML or JavaScript file that you intend to use to iteract with database. 
