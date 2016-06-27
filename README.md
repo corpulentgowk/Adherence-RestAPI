@@ -10,6 +10,10 @@ Make sure you have [Node.js](http://nodejs.org/) installed.
 git clone https://github.com/corpulentgowk/Adherence-RestAPI.git # or clone your own fork
 cd Adherence-RestAPI
 npm install
+npm install parse
+npm install mongoose
+npm install body-parser
+npm install multer
 npm start
 ```
 
