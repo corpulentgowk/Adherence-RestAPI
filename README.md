@@ -8,7 +8,7 @@ Make sure you have [Node.js](http://nodejs.org/) installed.
 
 ```sh
 git clone https://github.com/corpulentgowk/Adherence-RestAPI.git # or clone your own fork
-cd node-js-sample
+cd Adherence-RestAPI
 npm install
 npm start
 ```
