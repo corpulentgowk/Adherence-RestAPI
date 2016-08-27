@@ -1,9 +1,9 @@
 var express = require('express')
 var app = express()
-var Parse = require('parse/node').Parse; // module to use parsa javascript sdk
+// var Parse = require('parse/node').Parse; // module to use parsa javascript sdk
 
 // our parse project
-Parse.initialize("BDo39lSOtPuBwDfq0EBDgIjTzztIQE38Fuk03EcR", "ox76Y4RxB06A69JWAleRHSercHKomN2FVu61dfu3");
+// Parse.initialize("BDo39lSOtPuBwDfq0EBDgIjTzztIQE38Fuk03EcR", "ox76Y4RxB06A69JWAleRHSercHKomN2FVu61dfu3");
 
 //Database connection
 var mongoose = require('mongoose');
@@ -35,7 +35,9 @@ var Schema = mongoose.Schema;
 
 // schemas for most existing collections
 // using string formats for pointers, not sure if correct
-var MessageSchema = new Schema({
+var Schemas = new Object();
+
+Schemas.MessageSchema = new Schema({
   //_id: String,
   _created_at: {type: Date},
   _updated_at: {type: Date},
@@ -46,7 +48,7 @@ var MessageSchema = new Schema({
 },
 {collection: 'Message'});
 
-var BottleSchema = new Schema({
+Schemas.BottleSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   UUID: String,
@@ -55,7 +57,7 @@ var BottleSchema = new Schema({
 },
 {collection: 'Bottle'});
 
-var DoctorSchema = new Schema({
+Schemas.DoctorSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   address: String,
@@ -65,7 +67,7 @@ var DoctorSchema = new Schema({
 },
 {collection: 'Doctor'});
 
-var ImageSchema = new Schema({
+Schemas.ImageSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   UUID: String,
@@ -73,21 +75,21 @@ var ImageSchema = new Schema({
 },
 {collection: 'Image'});
 
-var ImageStorageDevSchema = new Schema({
+Schemas.ImageStorageDevSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   Image: String
 },
 {collection: 'ImageStorageDev'});
 
-var PatientSchema = new Schema({
+Schemas.PatientSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   _p_userAccount: String
 },
 {collection: 'Patient'});
 
-var PillLibSchema = new Schema({
+Schemas.PillLibSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   pillInfo: String,
@@ -96,7 +98,7 @@ var PillLibSchema = new Schema({
 },
 {collection: 'PillLib'});
 
-var PrescriptionSchema = new Schema({
+Schemas.PrescriptionSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   _p_bottle: String,
@@ -106,7 +108,7 @@ var PrescriptionSchema = new Schema({
 },
 {collection: 'Prescription'});
 
-var ScheduleSchema = new Schema({
+Schemas.ScheduleSchema = new Schema({
   _created_at: {type: Date},
   _updated_at: {type: Date},
   _p_Drug: String,
@@ -144,7 +146,7 @@ newMess.save(function (err) {
 app.get ('/', function (request, response) {
   var data = (request.query);
   var schemaObject = data['Collection'] + 'Schema'; // same deal as below
-  var newColl = mongoose.model(data['Collection'], eval(schemaObject)); // " "
+  var newColl = mongoose.model(data['Collection'], Schemas[schemaObject]); // " "
   var query = newColl.findOne(data['Criteria']); // create new query with specified criteria
   query.select(data['FieldsToRetrieve']); // OMIT if want all fields
   query.exec(function (err, result) {
@@ -160,7 +162,7 @@ app.post('/retrieve', function(request, response) {
   // {"collection": "Message", "Criteria": {"subject": "Test "}, "FieldsToRetrieve": "text"}
   var data = (request.body);
   var schemaObject = data['Collection'] + 'Schema'; // same deal as below
-  var newColl = mongoose.model(data['Collection'], eval(schemaObject)); // " "
+  var newColl = mongoose.model(data['Collection'], (schemaObject)); // " "
   var query = newColl.findOne(data['Criteria']); // create new query with specified criteria
   query.select(data['FieldsToRetrieve']); // OMIT if want all fields
   query.exec(function (err, result) {
@@ -181,7 +183,7 @@ app.post('/save', function(request, response) {
 
   if (data['Fields']['_id'] != null) { //Updates existing entries
     var schemaObject = data['Collection'] + 'Schema';
-    var newColl = mongoose.model(data['Collection'], eval(schemaObject));
+    var newColl = mongoose.model(data['Collection'], Schemas[schemaObject]);
     var id = data['Fields']['_id'];
     delete data['Fields']['_id']
 
@@ -214,7 +216,7 @@ app.post('/save', function(request, response) {
     var Valid = true;
     var schemaObject = data['Collection'] + 'Schema';
     // new Collection object
-    var newColl = mongoose.model(data['Collection'], eval(schemaObject));
+    var newColl = mongoose.model(data['Collection'], Schemas[schemaObject]);
     var now = new Date(); // take current date
     var jsonDate = now.toJSON();
 
@@ -223,7 +225,7 @@ app.post('/save', function(request, response) {
       _updated_at: jsonDate
     });
 
-    var schemafields = eval(schemaObject).paths
+    var schemafields = Schemas[schemaObject].paths
 
     for (var field in data['Fields']) // go through fields in JSON
     {
@@ -262,7 +264,7 @@ app.post('/save', function(request, response) {
 app.get ('/getSchema', function (request, response) {
   var data = (request.query);
   var schemaObject = data['Collection'] + 'Schema';
-  response.send(eval(schemaObject)['paths']);
+  response.send(Schemas[schemaObject]['paths']);
 
 });
 
