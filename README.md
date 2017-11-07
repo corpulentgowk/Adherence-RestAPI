@@ -1,6 +1,30 @@
 # Object Oriented Query Tool
 An object oriented database query tool using JavaScript. 
-Example
+## Example
+
+'''
+  //create an instance of the class with Target collection set to Pill lib
+  var pill = new AdhObject("PillLib");
+ 
+  pill.GetLayout();  // print the schema for the PillLib collection.
+  // Set the desired fields In The Collection
+  pill.pillName = "Vitrum";
+  pill.pillInfo = "Some Info";
+  // save the object
+  pill.Save(); //Adds document to pillLib collection with attributes "pillName" and "pillInfo". 
+                // Set to explicit values set on the object.
+               
+  var getPill = new AdhObject("PillLib");
+  // Sets the parameter you would like to query with
+  getPill._id = "575c79646a2dcf322b17c093";
+  
+  // Search for a Pill in the pill lib with an _id = "575c79646a2dcf322b17c093"
+  getPill.Get();
+  // Change values in document retrieved from the collection. 
+  getPill.pillInfo = "Final passover";
+  getPill.Save(); //Saves to existing document in the collection or creates a new one. 
+  
+'''
 
 A Node.js app using [Express 4](http://expressjs.com/).
 ## Running Locally
