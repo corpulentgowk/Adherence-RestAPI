@@ -61,7 +61,6 @@ function AdhObject(collection, getProperties) {
       url: "http://localhost:5000/getSchema",
       data: data,
       success: function (result) {
-          console.log("gotem")
           console.log(result);
       },
       error: function (msg, b, err){
@@ -72,3 +71,5 @@ function AdhObject(collection, getProperties) {
 
 
 }
+
+module.exports = AdhObject;
