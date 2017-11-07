@@ -2,7 +2,7 @@
 An object oriented database query tool using JavaScript. 
 ## Example
 
-```
+```JavaScript
   //create an instance of the class with Target collection set to Pill lib
   var pill = new AdhObject("PillLib");
  
