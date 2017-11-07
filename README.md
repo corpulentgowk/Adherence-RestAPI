@@ -3,6 +3,15 @@ An object oriented database query tool using JavaScript.
 ## Querying Find/Create Using JavaScript Object
 
 ```JavaScript
+  // Import into JavaScript File
+  var x = document.createElement('script');
+  x.src = 'http://example.com/test.js';
+  document.getElementsByTagName("head")[0].appendChild(x);
+  
+  // Import into Node.Js
+  var AdhObject = require("API-tool.js");
+  
+  
   //create an instance of the class with Target collection set to Pill lib
   var pill = new AdhObject("PillLib");
  
