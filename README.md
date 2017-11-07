@@ -2,7 +2,7 @@
 An object oriented database query tool using JavaScript. 
 ## Example
 
-'''
+```
   //create an instance of the class with Target collection set to Pill lib
   var pill = new AdhObject("PillLib");
  
@@ -24,7 +24,7 @@ An object oriented database query tool using JavaScript.
   getPill.pillInfo = "Final passover";
   getPill.Save(); //Saves to existing document in the collection or creates a new one. 
   
-'''
+```
 
 A Node.js app using [Express 4](http://expressjs.com/).
 ## Running Locally
