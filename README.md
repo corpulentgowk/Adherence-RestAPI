@@ -5,7 +5,7 @@ An object oriented database query tool using JavaScript.
 ```JavaScript
   // Import into JavaScript File
   var x = document.createElement('script');
-  x.src = 'http://example.com/test.js';
+  x.src = 'PATH_TO_FILE/API-tool.js';
   document.getElementsByTagName("head")[0].appendChild(x);
   
   // Import into Node.Js
